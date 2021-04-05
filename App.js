@@ -16,14 +16,12 @@ import {
   Text,
   useColorScheme,
   View,
+  UIManager
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
   Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 const Section = ({children, title}): Node => {
@@ -52,6 +50,22 @@ const Section = ({children, title}): Node => {
   );
 };
 
+const getConstant = (): String => {
+  try {
+    return UIManager.RNSimple.Constants.SimpleConstName;
+  } catch(e) {
+    return 'Some error occurred while getting the constant.'
+  }
+}
+
+const getCommand = (): String => {
+  try {
+    return UIManager.RNSimple.Commands.doSomething;
+  } catch(e) {
+    return 'Some error occurred while getting the command.'
+  }
+}
+
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -70,20 +84,12 @@ const App: () => Node = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
+          <Section title="Constants">
+            The value of SimpleConstName is "{getConstant()}";
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
+          <Section title="Commands">
+            The value of the simple command is "{getCommand()}";
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
         </View>
       </ScrollView>
     </SafeAreaView>
